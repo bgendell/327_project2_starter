@@ -173,9 +173,12 @@ void sortAsc(){
 	for(int j = 0;j<listSize;j++){
 		for (int i=0;i<listSize-1;i++){
 			if(list[i+1].word < list[i].word){
+				int temp = list[i+1].num_occur;
 				std::string holder =  list[i+1].word;
 				list[i+1].word = list[i].word;
+				list[i+1].num_occur = list[i].num_occur;
 				list[i].word = holder;
+				list[i].num_occur = temp;
 			}
 		}
 	}
@@ -184,9 +187,12 @@ void sortDesc(){
 	for(int j = 0;j<listSize;j++){
 		for (int i=0;i<listSize-1;i++){
 			if(list[i+1].word > list[i].word){
+				int temp = list[i+1].num_occur;
 				std::string holder =  list[i+1].word;
 				list[i+1].word = list[i].word;
+				list[i+1].num_occur = list[i].num_occur;
 				list[i].word = holder;
+				list[i].num_occur = temp;
 			}
 		}
 	}
@@ -195,9 +201,12 @@ void sortNum(){
 	for(int j = 0;j<listSize;j++){
 		for (int i=0;i<listSize-1;i++){
 			if(list[i+1].num_occur > list[i].num_occur){
-				int holder =  list[i+1].num_occur;
+				int temp = list[i+1].num_occur;
+				std::string holder =  list[i+1].word;
+				list[i+1].word = list[i].word;
 				list[i+1].num_occur = list[i].num_occur;
-				list[i].num_occur = holder;
+				list[i].word = holder;
+				list[i].num_occur = temp;
 			}
 		}
 	}
