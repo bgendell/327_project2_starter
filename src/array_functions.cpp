@@ -114,16 +114,17 @@ void processToken(std::string &token){
 	listSize++;
 }
 
-bool openFile(std::fstream& myfile, const std::string& myFileName, std::ios_base::openmode mode){
+bool openFile(std::fstream& myfile, const std::string& myFileName,std::ios_base::openmode mode){
 	//open file
-	myfile.open(myFileName.c_str(),mode);
+	myfile.open(myFileName.c_str(), mode);
 
 	//check for returns
-	if(myfile.is_open()){
-		return true;
+	if(!myfile.is_open()){
+		return false;
 	}
 	else{
-		return false;
+		processFile(myfile);
+		return true;
 	}
 }
 
@@ -141,8 +142,8 @@ void closeFile(std::fstream& myfile){
  * */
 int writeArraytoFile(const std::string &outputfilename){
 	std::fstream fileToOut;
-	bool test = openFile(fileToOut,outputfilename,std::ios_base::out);
-	if (!test){
+	openFile(fileToOut,outputfilename,std::ios_base::out);
+	if (!fileToOut.is_open()){
 		return constants::FAIL_FILE_DID_NOT_OPEN;
 	}
 	if (listSize == 0){
@@ -160,43 +161,53 @@ int writeArraytoFile(const std::string &outputfilename){
 	}
 
 }
-
+/*
+ * Sort myEntryArray based on so enum value.
+ * You must provide a solution that handles alphabetic sorting (A-Z)
+ * The presence of the enum implies a switch statement based on its value
+ */
+void sortNone(){
+	return;
+}
+void sortAsc(){
+	for(int j = 0;j<listSize;j++){
+		for (int i=0;i<listSize-1;i++){
+			if(list[i+1].word < list[i].word){
+				std::string holder =  list[i+1].word;
+				list[i+1].word = list[i].word;
+				list[i].word = holder;
+			}
+		}
+	}
+}
+void sortDesc(){
+	for(int j = 0;j<listSize;j++){
+		for (int i=0;i<listSize-1;i++){
+			if(list[i+1].word > list[i].word){
+				std::string holder =  list[i+1].word;
+				list[i+1].word = list[i].word;
+				list[i].word = holder;
+			}
+		}
+	}
+}
+void sortNum(){
+	for(int j = 0;j<listSize;j++){
+		for (int i=0;i<listSize-1;i++){
+			if(list[i+1].num_occur > list[i].num_occur){
+				int holder =  list[i+1].num_occur;
+				list[i+1].num_occur = list[i].num_occur;
+				list[i].num_occur = holder;
+			}
+		}
+	}
+}
 void sortArray(constants::sortOrder so){
-	if(so == constants::NONE){
-		return;
-	}
-	if(so==constants::ASCENDING){
-		for(int j = 0;j<listSize;j++){
-			for (int i=0;i<listSize-1;i++){
-				if(list[i+1].word < list[i].word){
-					std::string holder =  list[i+1].word;
-					list[i+1].word = list[i].word;
-					list[i].word = holder;
-				}
-			}
-		}
-	}
-	if(so==constants::DESCENDING){
-		for(int j = 0;j<listSize;j++){
-			for (int i=0;i<listSize-1;i++){
-				if(list[i+1].word > list[i].word){
-					std::string holder =  list[i+1].word;
-					list[i+1].word = list[i].word;
-					list[i].word = holder;
-				}
-			}
-		}
-	}
-	if(so==constants::NUMBER_OCCURRENCES){
-		for(int j = 0;j<listSize;j++){
-			for (int i=0;i<listSize-1;i++){
-				if(list[i+1].num_occur > list[i].num_occur){
-					int holder =  list[i+1].num_occur;
-					list[i+1].num_occur = list[i].num_occur;
-					list[i].num_occur = holder;
-				}
-			}
-		}
+	switch(so){
+		case constants::sortOrder::NONE: sortNone(); break;
+		case constants::sortOrder::ASCENDING: sortAsc(); break;
+		case constants::sortOrder::DESCENDING: sortDesc(); break;
+		case constants::sortOrder::NUMBER_OCCURRENCES: sortNum(); break;
 	}
 
 }
