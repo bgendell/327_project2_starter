@@ -172,7 +172,11 @@ void sortNone(){
 void sortAsc(){
 	for(int j = 0;j<listSize;j++){
 		for (int i=0;i<listSize-1;i++){
-			if(list[i+1].word < list[i].word){
+			std::string a = list[i+1].word;
+			std::string b = list[i].word;
+			toUpper(a);
+			toUpper(b);
+			if(a<b){
 				int temp = list[i+1].num_occur;
 				std::string holder =  list[i+1].word;
 				list[i+1].word = list[i].word;
@@ -186,7 +190,11 @@ void sortAsc(){
 void sortDesc(){
 	for(int j = 0;j<listSize;j++){
 		for (int i=0;i<listSize-1;i++){
-			if(list[i+1].word > list[i].word){
+			std::string a = list[i+1].word;
+			std::string b = list[i].word;
+			toUpper(a);
+			toUpper(b);
+			if(a<b){
 				int temp = list[i+1].num_occur;
 				std::string holder =  list[i+1].word;
 				list[i+1].word = list[i].word;
