@@ -6,8 +6,6 @@
  *      Author: Ben Gendell
  */
 
-//============================================================================
-//	TODO add necessary includes here
 #include <fstream>
 #include <iostream>
 #include <sstream>
@@ -18,20 +16,7 @@
 #include "utilities.h"
 #include "constants.h"
 
-//============================================================================
 
-//============================================================================
-//	stuff you will need
-//============================================================================
-//TODO define a structure to track words and number of times they occur
-
-//TODO add a global array of entry structs (global to this file)
-
-//TODO add variable to keep track of next available slot in array
-
-//TODO define all functions in header file
-
-//TODO look in utilities.h for useful functions, particularly strip_unwanted_chars!
 struct entries{
 	std::string word;
 	int num_occur;
@@ -39,6 +24,7 @@ struct entries{
 entries list[constants::MAX_WORDS];
 int listSize = 0;
 
+//zero out array that tracks words and their occurrences
 void clearArray(){
 	for(int i=0;i<=abs(sizeof(&list));i++){
 		list[i].word = "";
@@ -47,6 +33,7 @@ void clearArray(){
 	listSize = 0;
 }
 
+//how many unique words are in array
 int getArraySize(){
 	while (list[listSize].word != ""){
 		listSize++;
@@ -54,10 +41,11 @@ int getArraySize(){
 	return listSize;
 }
 
+//get data at a particular location
 std::string getArrayWordAt(int i){
 	return list[i].word;
 }
-
+//get number of occurances of word at place i
 int getArrayWord_NumbOccur_At(int i){
 	return list[i].num_occur;
 }
@@ -91,7 +79,7 @@ void processLine(std::string &myString){
 		processToken(temp);
 	}
 }
-
+/*Keep track of how many times each token seen*/
 void processToken(std::string &token){
 	strip_unwanted_chars(token);
 	if(token==""){
@@ -114,6 +102,7 @@ void processToken(std::string &token){
 	listSize++;
 }
 
+//opens file
 bool openFile(std::fstream& myfile, const std::string& myFileName,std::ios_base::openmode mode){
 	//open file
 	myfile.open(myFileName.c_str(), mode);
@@ -127,7 +116,7 @@ bool openFile(std::fstream& myfile, const std::string& myFileName,std::ios_base:
 		return true;
 	}
 }
-
+//closes file
 void closeFile(std::fstream& myfile){
 	if (myfile.is_open()){
 		myfile.close();
@@ -165,6 +154,7 @@ int writeArraytoFile(const std::string &outputfilename){
  * Sort myEntryArray based on so enum value.
  * You must provide a solution that handles alphabetic sorting (A-Z)
  * The presence of the enum implies a switch statement based on its value
+ * following lines include functions based on switch call
  */
 void sortNone(){
 	return;
@@ -172,6 +162,7 @@ void sortNone(){
 void sortAsc(){
 	for(int j = 0;j<listSize;j++){
 		for (int i=0;i<listSize-1;i++){
+			//these lines to insure total comparison between cases
 			std::string a = list[i+1].word;
 			std::string b = list[i].word;
 			toUpper(a);
@@ -190,6 +181,7 @@ void sortAsc(){
 void sortDesc(){
 	for(int j = 0;j<listSize;j++){
 		for (int i=0;i<listSize-1;i++){
+			//these lines to insure total comparison between cases
 			std::string a = list[i+1].word;
 			std::string b = list[i].word;
 			toUpper(a);
